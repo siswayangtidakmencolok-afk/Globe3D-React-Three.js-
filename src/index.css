@@ -30,6 +30,11 @@ body {
   min-height: 100vh;
 }
 
+body{
+  margin:0;
+  background: radial-gradient(circle at bottom,#020111,#000);
+}
+
 h1 {
   font-size: 3.2em;
   line-height: 1.1;

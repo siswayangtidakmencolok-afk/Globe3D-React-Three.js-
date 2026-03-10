@@ -1,35 +1,42 @@
-import { useFrame } from "@react-three/fiber";
-import { useRef } from "react";
-import * as THREE from "three";
+import { useFrame, useLoader } from "@react-three/fiber"
+import { useRef } from "react"
+import * as THREE from "three"
+import CityMarkers from "./CityMarkers"
 
-export default function Globe() {
+export default function Globe(){
 
-  const meshRef = useRef<THREE.Mesh>(null);
+const ref = useRef<THREE.Mesh>(null)
 
-  const texture = new THREE.TextureLoader().load(
-    "https://threejs.org/examples/textures/planets/earth_atmos_2048.jpg"
-  );
+const earth = useLoader(
+THREE.TextureLoader,
+"/textures/earth.jpg"
+)
 
-  useFrame(() => {
-    if (meshRef.current) {
-      meshRef.current.rotation.y += 0.002;
-    }
-  });
+useFrame(()=>{
 
-  return (
-    <group>
+if(ref.current){
+ref.current.rotation.y += 0.001
+}
 
-      <mesh ref={meshRef}>
-        <sphereGeometry args={[2, 64, 64]} />
-        <meshStandardMaterial map={texture} />
-      </mesh>
+})
 
-      {/* marker kota */}
-      <mesh position={[1.5,0.3,1]}>
-        <sphereGeometry args={[0.05,16,16]} />
-        <meshBasicMaterial color="red" />
-      </mesh>
+return(
 
-    </group>
-  );
+<group>
+
+<mesh ref={ref}>
+
+<sphereGeometry args={[2,64,64]} />
+
+<meshStandardMaterial map={earth}/>
+
+</mesh>
+
+{/* MARKER KOTA */}
+<CityMarkers/>
+
+</group>
+
+)
+
 }
