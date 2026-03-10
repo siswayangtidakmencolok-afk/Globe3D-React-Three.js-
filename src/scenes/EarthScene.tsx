@@ -31,7 +31,10 @@ return(
 
 <CameraController selectedCity={selectedCity}/>
 
-<OrbitControls enableZoom/>
+<OrbitControls
+  enableZoom={true}
+  enablePan={true}
+/>
 
 </Canvas>
 
