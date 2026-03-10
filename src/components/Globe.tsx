@@ -3,6 +3,7 @@ import { useFrame } from "@react-three/fiber"
 import { useTexture } from "@react-three/drei"
 import * as THREE from "three"
 import CityMarkers from "./CityMarkers"
+import Satellite from "./Satellite"
 import type { City } from "../data/cities"
 
 type Props = {
@@ -77,6 +78,8 @@ side={THREE.BackSide}
 </mesh>
 
 <CityMarkers setSelectedCity={setSelectedCity} />
+
+<Satellite/>
 
 </group>
 
