@@ -14,8 +14,8 @@ export default function Globe({ setSelectedCity }: Props) {
 const earthRef = useRef<THREE.Mesh>(null!)
 const cloudRef = useRef<THREE.Mesh>(null!)
 
-const dayMap = useTexture("/textures/earth_day.jpg")
-const nightMap = useTexture("/textures/earth_night.jpg")
+const dayMap = useTexture("/textures/earth.jpg")
+const nightMap = useTexture("/textures/night.jpg")
 const cloudMap = useTexture("/textures/earth_clouds.png")
 
 useFrame(() => {
