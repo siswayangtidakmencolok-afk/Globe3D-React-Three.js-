@@ -1,6 +1,9 @@
+import { useRef } from "react"
+import { useFrame } from "@react-three/fiber"
+import { useTexture } from "@react-three/drei"
+import * as THREE from "three"
 import CityMarkers from "./CityMarkers"
 import type { City } from "../data/cities"
-import { useTexture } from "@react-three/drei"
 
 type Props = {
   setSelectedCity: (city: City) => void
@@ -8,17 +11,68 @@ type Props = {
 
 export default function Globe({ setSelectedCity }: Props) {
 
-const earthTexture = useTexture("/textures/earth.jpg")
+const earthRef = useRef<THREE.Mesh>(null!)
+const cloudRef = useRef<THREE.Mesh>(null!)
+
+const dayMap = useTexture("/textures/earth_day.jpg")
+const nightMap = useTexture("/textures/earth_night.jpg")
+const cloudMap = useTexture("/textures/earth_clouds.png")
+
+useFrame(() => {
+
+if (earthRef.current) {
+  earthRef.current.rotation.y += 0.0007
+}
+
+if (cloudRef.current) {
+  cloudRef.current.rotation.y += 0.001
+}
+
+})
 
 return (
 
 <group>
 
-<mesh>
+{/* EARTH */}
+<mesh ref={earthRef}>
 
-<sphereGeometry args={[2,64,64]} />
+<sphereGeometry args={[2, 64, 64]} />
 
-<meshStandardMaterial map={earthTexture} />
+<meshStandardMaterial
+map={dayMap}
+emissiveMap={nightMap}
+emissive={"#ffffff"}
+emissiveIntensity={0.4}
+/>
+
+</mesh>
+
+{/* CLOUDS */}
+<mesh ref={cloudRef}>
+
+<sphereGeometry args={[2.03, 64, 64]} />
+
+<meshStandardMaterial
+map={cloudMap}
+transparent
+opacity={0.8}
+depthWrite={false}
+/>
+
+</mesh>
+
+{/* ATMOSPHERE */}
+<mesh scale={2.2}>
+
+<sphereGeometry args={[1, 64, 64]} />
+
+<meshBasicMaterial
+color="#3aa6ff"
+transparent
+opacity={0.15}
+side={THREE.BackSide}
+/>
 
 </mesh>
 
