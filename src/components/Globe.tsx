@@ -1,39 +1,28 @@
-import { useFrame, useLoader } from "@react-three/fiber"
-import { useRef } from "react"
-import * as THREE from "three"
 import CityMarkers from "./CityMarkers"
+import type { City } from "../data/cities"
+import { useTexture } from "@react-three/drei"
 
-export default function Globe(){
-
-const ref = useRef<THREE.Mesh>(null)
-
-const earth = useLoader(
-THREE.TextureLoader,
-"/textures/earth.jpg"
-)
-
-useFrame(()=>{
-
-if(ref.current){
-ref.current.rotation.y += 0.001
+type Props = {
+  setSelectedCity: (city: City) => void
 }
 
-})
+export default function Globe({ setSelectedCity }: Props) {
 
-return(
+const earthTexture = useTexture("/textures/earth.jpg")
+
+return (
 
 <group>
 
-<mesh ref={ref}>
+<mesh>
 
 <sphereGeometry args={[2,64,64]} />
 
-<meshStandardMaterial map={earth}/>
+<meshStandardMaterial map={earthTexture} />
 
 </mesh>
 
-{/* MARKER KOTA */}
-<CityMarkers/>
+<CityMarkers setSelectedCity={setSelectedCity} />
 
 </group>
 

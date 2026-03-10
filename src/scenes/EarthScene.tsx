@@ -3,26 +3,35 @@ import { OrbitControls, Stars } from "@react-three/drei"
 import Globe from "../components/Globe"
 import Satellite from "../components/Satellite"
 import OrbitLine from "../components/OrbitLine"
+import CameraController from "../components/CameraController"
+import type { City } from "../data/cities"
 
-export default function EarthScene(){
+type Props = {
+  selectedCity: City | null
+  setSelectedCity: (city: City) => void
+}
+
+export default function EarthScene({ selectedCity, setSelectedCity }: Props) {
 
 return(
 
-<Canvas camera={{ position:[0,0,6] }}>
+<Canvas camera={{ position:[0,0,6], fov:45 }}>
 
-<ambientLight intensity={0.5}/>
+<ambientLight intensity={0.4}/>
 
-<directionalLight position={[5,5,5]}/>
+<directionalLight position={[5,3,5]} intensity={2}/>
 
-<Stars radius={300} depth={60} count={5000} factor={4}/>
+<Stars radius={300} depth={60} count={8000} factor={6}/>
 
-<Globe/>
+<Globe setSelectedCity={setSelectedCity}/>
 
 <Satellite/>
 
-<OrbitControls/>
-
 <OrbitLine/>
+
+<CameraController selectedCity={selectedCity}/>
+
+<OrbitControls enableZoom/>
 
 </Canvas>
 
