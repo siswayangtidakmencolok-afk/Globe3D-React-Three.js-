@@ -9,6 +9,7 @@ import GalaxySky from "../components/GalaxySky"
 import ShootingStars from "../components/ShootingStars"
 import GasPlanet from "../components/GasPlanet"
 import Sun from "../components/Sun"
+import AsteroidBelt from "../components/AsteroidBelt"
 
 type Props = {
   selectedCity: City | null
@@ -23,6 +24,7 @@ return(
 <GalaxySky/>
 <Sun/>
 <GasPlanet/>
+<AsteroidBelt/>
 <ShootingStars/>
 <ambientLight intensity={0.4}/>
 <directionalLight position={[5,3,5]} intensity={2}/>
