@@ -5,6 +5,7 @@ import Satellite from "../components/Satellite"
 import OrbitLine from "../components/OrbitLine"
 import CameraController from "../components/CameraController"
 import type { City } from "../data/cities"
+import GalaxySky from "../components/GalaxySky"
 
 type Props = {
   selectedCity: City | null
@@ -16,6 +17,8 @@ export default function EarthScene({ selectedCity, setSelectedCity }: Props) {
 return(
 
 <Canvas camera={{ position:[0,0,6], fov:45 }}>
+
+<GalaxySky/>
 
 <ambientLight intensity={0.4}/>
 
