@@ -9,20 +9,46 @@ return(
 
 {cities.map((city)=>{
 
-const pos = latLngToVector(city.lat, city.lng, 2.05)
+const pos = latLngToVector(city.lat,city.lng,2.05)
 
 return(
 
-<mesh
-key={city.name}
-position={[pos.x, pos.y, pos.z]}
->
+<group key={city.name} position={[pos.x,pos.y,pos.z]}>
 
-<sphereGeometry args={[0.05,16,16]} />
+{/* core */}
+<mesh>
 
-<meshBasicMaterial color="red"/>
+<sphereGeometry args={[0.04,16,16]}/>
+
+<meshBasicMaterial color="#ff3b3b"/>
 
 </mesh>
+
+{/* glow */}
+<mesh rotation={[Math.PI/2,0,0]}>
+
+<ringGeometry args={[0.07,0.09,32]} />
+
+<meshBasicMaterial
+color="#ff3b3b"
+transparent
+opacity={0.6}
+/>
+
+</mesh>
+<mesh scale={1.6}>
+
+<sphereGeometry args={[0.04,16,16]}/>
+
+<meshBasicMaterial
+color="#ff3b3b"
+transparent
+opacity={0.3}
+/>
+
+</mesh>
+
+</group>
 
 )
 

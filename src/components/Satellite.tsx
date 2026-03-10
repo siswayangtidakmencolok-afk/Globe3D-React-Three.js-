@@ -4,16 +4,17 @@ import * as THREE from "three"
 
 export default function Satellite(){
 
-const ref = useRef<THREE.Mesh>(null)
+const group = useRef<THREE.Group>(null)
 
 useFrame(({clock})=>{
 
 const t = clock.getElapsedTime()
 
-if(ref.current){
+if(group.current){
 
-ref.current.position.x = Math.cos(t)*3
-ref.current.position.z = Math.sin(t)*3
+group.current.position.x = Math.cos(t)*3
+group.current.position.z = Math.sin(t)*3
+group.current.rotation.y += 0.01
 
 }
 
@@ -21,13 +22,36 @@ ref.current.position.z = Math.sin(t)*3
 
 return(
 
-<mesh ref={ref}>
+<group ref={group}>
 
-<sphereGeometry args={[0.08,16,16]} />
+{/* body */}
+<mesh>
 
-<meshBasicMaterial color="white" />
+<boxGeometry args={[0.1,0.05,0.05]}/>
+
+<meshStandardMaterial color="white"/>
 
 </mesh>
+
+{/* solar panel kiri */}
+<mesh position={[-0.15,0,0]}>
+
+<boxGeometry args={[0.2,0.02,0.1]}/>
+
+<meshStandardMaterial color="#2a6cff"/>
+
+</mesh>
+
+{/* solar panel kanan */}
+<mesh position={[0.15,0,0]}>
+
+<boxGeometry args={[0.2,0.02,0.1]}/>
+
+<meshStandardMaterial color="#2a6cff"/>
+
+</mesh>
+
+</group>
 
 )
 

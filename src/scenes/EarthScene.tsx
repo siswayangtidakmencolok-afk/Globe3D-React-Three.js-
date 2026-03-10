@@ -2,6 +2,7 @@ import { Canvas } from "@react-three/fiber"
 import { OrbitControls, Stars } from "@react-three/drei"
 import Globe from "../components/Globe"
 import Satellite from "../components/Satellite"
+import OrbitLine from "../components/OrbitLine"
 
 export default function EarthScene(){
 
@@ -20,6 +21,8 @@ return(
 <Satellite/>
 
 <OrbitControls/>
+
+<OrbitLine/>
 
 </Canvas>
 
