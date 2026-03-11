@@ -4,23 +4,29 @@ import * as THREE from "three"
 
 export default function GasPlanet(){
 
+const orbitRef = useRef<THREE.Group>(null!)
 const planetRef = useRef<THREE.Mesh>(null!)
 const glowRef = useRef<THREE.Mesh>(null!)
 
 useFrame(()=>{
 
+if(orbitRef.current){
+orbitRef.current.rotation.y += 0.003
+}
+
 if(planetRef.current){
-planetRef.current.rotation.y += 0.002
+planetRef.current.rotation.y += 0.001
 }
 
 })
 
 return(
 
-<group position={[10,1,-4]}>
+<group ref={orbitRef}>
+<group position={[10,0,0]}>
 
 <mesh ref={planetRef}>
-<sphereGeometry args={[1.2,64,64]} />
+<sphereGeometry args={[1.4,64,64]} />
 <meshStandardMaterial
 color="#6b4cff"
 roughness={0.6}
@@ -38,6 +44,7 @@ opacity={0.25}
 />
 </mesh>
 
+</group>
 </group>
 
 )
