@@ -15,6 +15,8 @@ import Sun from "../components/Sun"
 import AsteroidBelt from "../components/AsteroidBelt"
 import BlackHole from "../components/BlackHole"
 import CameraRig from "../components/CameraRig"
+import Nebula from "../components/Nebula"
+import NebulaCloud from "../components/NebulaCloud"
 
 export default function EarthScene(){
 
@@ -36,6 +38,8 @@ camera={{ position:[0,0,8], fov:45 }}
 <AsteroidBelt/>
 <BlackHole/>
 <ShootingStars/>
+<NebulaCloud/>
+<Nebula/>
 
 <ambientLight intensity={0.4}/>
 <directionalLight position={[5,3,5]} intensity={2}/>
