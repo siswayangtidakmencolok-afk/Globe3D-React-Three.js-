@@ -19,6 +19,10 @@ import Nebula from "../components/Nebula"
 import NebulaCloud from "../components/NebulaCloud"
 import SaturnPlanet from "../components/SaturnPlanet"
 import Spaceship from "../components/Spaceship"
+import AsteroidField from "../components/AsteroidField"
+import PlanetGravity from "../components/PlanetGravity"
+import BlackHoleGravity from "../components/BlackHoleGravity"
+import CinematicCamera from "../components/CinematicCamera"
 
 export default function EarthScene(){
 
@@ -34,6 +38,10 @@ style={{ width: "100%", height: "100%" }}
 camera={{ position:[0,0,8], fov:45 }}
 >
 
+<AsteroidField/>
+<PlanetGravity/>
+<BlackHoleGravity/>
+<CinematicCamera/>
 <GalaxySky/>
 <Sun/>
 <GasPlanet/>
