@@ -1,5 +1,5 @@
 import { useThree, useFrame } from "@react-three/fiber"
-import { useRef, useEffect } from "react"
+import { useEffect, useRef } from "react"
 import * as THREE from "three"
 
 type Props = {
@@ -15,29 +15,33 @@ export default function CameraRig({ target }: Props) {
 
   useEffect(() => {
 
-    if (target === "earth") {
-      targetPos.current.set(0, 0, 6)
+    console.log("Camera target:", target)
+
+    if(target === "earth"){
+      targetPos.current.set(0,0,8)
     }
 
-    if (target === "planet") {
-      targetPos.current.set(10, 2, 6)
+    if(target === "planet"){
+      targetPos.current.set(15,2,8)
     }
 
-    if (target === "blackhole") {
-      targetPos.current.set(15, 5, 8)
+    if(target === "blackhole"){
+      targetPos.current.set(-15,4,10)
     }
 
     moving.current = true
 
-  }, [target])
+  },[target])
 
-  useFrame(() => {
+  useFrame(()=>{
 
-    if (!moving.current) return
+    if(!moving.current) return
 
-    camera.position.lerp(targetPos.current, 0.05)
+    camera.position.lerp(targetPos.current,0.05)
 
-    if (camera.position.distanceTo(targetPos.current) < 0.05) {
+    camera.lookAt(0,0,0)
+
+    if(camera.position.distanceTo(targetPos.current) < 0.1){
       moving.current = false
     }
 

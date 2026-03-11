@@ -37,13 +37,13 @@ positions[i*3+2] = Math.sin(angle)*radius
 
 return(
 
-<group position={[15,4,-12]}>
+<group position={[15,4,0]}>
 
 {/* black core */}
 
 <mesh>
 
-<sphereGeometry args={[1.2,64,64]} />
+<sphereGeometry args={[1.5,64,64]} />
 
 <meshBasicMaterial color="black" />
 
@@ -56,7 +56,7 @@ return(
 <ringGeometry args={[1.6,3.5,128]} />
 
 <meshBasicMaterial
-color="#ff8800"
+color="#ffef0b"
 side={THREE.DoubleSide}
 transparent
 opacity={0.6}

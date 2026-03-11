@@ -25,22 +25,19 @@ return(
 <group ref={orbitRef}>
 <group position={[10,0,0]}>
 
-<mesh ref={planetRef}>
-<sphereGeometry args={[1.4,64,64]} />
-<meshStandardMaterial
-color="#6b4cff"
-roughness={0.6}
-/>
+<mesh position={[15,2,0]}>
+<sphereGeometry args={[2,64,64]}/>
+<meshStandardMaterial color="orange"/>
 </mesh>
 
 {/* atmosphere glow */}
 
 <mesh ref={glowRef}>
-<sphereGeometry args={[1.35,64,64]} />
+<sphereGeometry args={[2,64,64]} />
 <meshBasicMaterial
-color="#a48cff"
+color="#ff9d00"
 transparent
-opacity={0.25}
+opacity={0.6}
 />
 </mesh>
 

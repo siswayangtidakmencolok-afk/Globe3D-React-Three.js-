@@ -8,10 +8,7 @@ const [selectedCity,setSelectedCity] = useState<City | null>(null)
 
 return(
   <div style={{ width: "100vw", height: "100vh" }}>
-<EarthScene
-selectedCity={selectedCity}
-setSelectedCity={setSelectedCity}
-/>
+<EarthScene/>
   </div>
   )
 

@@ -27,8 +27,7 @@ return(
 
 <Canvas 
 style={{ width: "100%", height: "100%" }}
-camera={{ position:[0,0,6], fov:45 }}
-dpr={[1,2]}
+camera={{ position:[0,0,8], fov:45 }}
 >
 
 <GalaxySky/>
