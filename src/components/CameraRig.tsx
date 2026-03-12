@@ -29,6 +29,10 @@ export default function CameraRig({ target }: Props) {
       targetPos.current.set(-15,4,10)
     }
 
+    if(target === "wormhole"){
+      targetPos.current.set(0,0,-40)
+    }
+
     moving.current = true
 
   },[target])

@@ -15,7 +15,7 @@ if(!ship.current) return
 const t = state.clock.elapsedTime
 
 ship.current.position.x = Math.sin(t*0.2)*30
-ship.current.position.z = Math.cos(t*0.2)*30
+ship.current.position.z = Math.cos(t*0.5)*30
 
 ship.current.rotation.y += 0.01
 

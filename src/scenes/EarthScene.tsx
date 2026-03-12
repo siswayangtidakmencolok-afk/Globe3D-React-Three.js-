@@ -23,11 +23,15 @@ import AsteroidField from "../components/AsteroidField"
 import PlanetGravity from "../components/PlanetGravity"
 import BlackHoleGravity from "../components/BlackHoleGravity"
 import CinematicCamera from "../components/CinematicCamera"
+import Wormhole from "../components/Wormhole"
+import WarpStars from "../components/WarpStars"
 
 export default function EarthScene(){
 
 const [selectedCity,setSelectedCity] = useState<City | null>(null)
 const [target,setTarget] = useState("earth")
+const [cinematic,setCinematic] = useState(false)
+const [warp,setWarp] = useState(false)
 
 return(
 
@@ -41,7 +45,7 @@ camera={{ position:[0,0,8], fov:45 }}
 <AsteroidField/>
 <PlanetGravity/>
 <BlackHoleGravity/>
-<CinematicCamera/>
+<CinematicCamera enabled={cinematic}/>
 <GalaxySky/>
 <Sun/>
 <GasPlanet/>
@@ -51,11 +55,13 @@ camera={{ position:[0,0,8], fov:45 }}
 <NebulaCloud/>
 <Nebula/>
 <SaturnPlanet/>
+<Wormhole/>
+<WarpStars active={warp}/>
 
 <ambientLight intensity={0.4}/>
 <directionalLight position={[5,3,5]} intensity={2}/>
 
-<Stars radius={300} depth={60} count={8000} factor={6}/>
+<Stars radius={200} depth={40} count={2000} factor={4}/>
 
 <Globe setSelectedCity={setSelectedCity}/>
 <Satellite/>
@@ -65,7 +71,13 @@ camera={{ position:[0,0,8], fov:45 }}
 <CameraRig target={target}/>
 <CameraController selectedCity={selectedCity}/>
 
+<mesh>
+<sphereGeometry args={[2,32,32]}/>
+<meshStandardMaterial color="blue"/>
+</mesh>
+
 <OrbitControls
+enabled={!cinematic}
 enableZoom={true}
 enablePan={true}
 />
@@ -95,6 +107,21 @@ Gas Planet
 
 <button onClick={()=>setTarget("blackhole")}>
 Black Hole
+</button>
+
+<button
+onClick={()=>setCinematic(!cinematic)}>
+{cinematic ? "Free Camera" : "Cinematic Mode"}
+</button>
+
+<button onClick={()=>setTarget("wormhole")}>
+Wormhole
+</button>
+
+<button
+onClick={()=>setWarp(!warp)}
+>
+{warp ? "Stop Warp" : "Warp Jump"}
 </button>
 
 </div>
