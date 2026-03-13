@@ -1,41 +1,65 @@
+import { useFrame, useLoader } from "@react-three/fiber"
 import { useRef } from "react"
-import { useFrame } from "@react-three/fiber"
 import * as THREE from "three"
 
 export default function Sun(){
 
-const sunRef = useRef<THREE.Mesh>(null!)
+const sun = useRef<THREE.Mesh>(null!)
+const glow = useRef<THREE.Mesh>(null!)
+
+const texture = useLoader(
+THREE.TextureLoader,
+"/textures/sun.jpg"
+)
 
 useFrame(()=>{
-if(sunRef.current){
-sunRef.current.rotation.y += 0.001
+
+if(sun.current){
+
+sun.current.rotation.y += 0.002
+
 }
+
+if(glow.current){
+
+glow.current.rotation.y -= 0.001
+
+}
+
 })
 
 return(
 
-<group position={[-25,10,-30]}>
+<group position={[20,8,-25]}>
 
-{/* sphere sun */}
+{/* matahari utama */}
 
-<mesh ref={sunRef}>
+<mesh ref={sun}>
 
-<sphereGeometry args={[5,64,64]} />
+<sphereGeometry args={[3,32,32]}/>
 
-<meshBasicMaterial
-color="#ffaa33"
+<meshStandardMaterial
+map={texture}
+emissive="#ff6600"
+emissiveIntensity={1.8}
 />
 
 </mesh>
 
-{/* sunlight */}
+{/* glow luar */}
 
-<pointLight
-intensity={500}
-distance={200}
-decay={2}
-color="#ffddaa"
+<mesh ref={glow}>
+
+<sphereGeometry args={[3.5,32,32]}/>
+
+<meshBasicMaterial
+color="#ffaa33"
+transparent
+opacity={0.18}
+side={THREE.BackSide}
 />
+
+</mesh>
 
 </group>
 
