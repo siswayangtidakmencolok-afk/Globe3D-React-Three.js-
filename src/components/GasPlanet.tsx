@@ -1,47 +1,64 @@
+import { useFrame, useLoader } from "@react-three/fiber"
 import { useRef } from "react"
-import { useFrame } from "@react-three/fiber"
 import * as THREE from "three"
 
 export default function GasPlanet(){
 
-const orbitRef = useRef<THREE.Group>(null!)
-const planetRef = useRef<THREE.Mesh>(null!)
-const glowRef = useRef<THREE.Mesh>(null!)
+const group = useRef<THREE.Group>(null!)
+const planet = useRef<THREE.Mesh>(null!)
 
-useFrame(()=>{
+const texture = useLoader(
+THREE.TextureLoader,
+"/textures/gasplanet.jpg"
+)
 
-if(orbitRef.current){
-orbitRef.current.rotation.y += 0.003
+useFrame((state)=>{
+
+const t = state.clock.elapsedTime * 0.15
+
+if(group.current){
+
+group.current.position.x = Math.cos(t) * 14
+group.current.position.z = Math.sin(t) * 14
+
 }
 
-if(planetRef.current){
-planetRef.current.rotation.y += 0.001
+if(planet.current){
+
+planet.current.rotation.y += 0.004
+
 }
 
 })
 
 return(
 
-<group ref={orbitRef}>
-<group position={[10,0,0]}>
+<group ref={group}>
 
-<mesh position={[15,2,0]}>
-<sphereGeometry args={[2,64,64]}/>
-<meshStandardMaterial color="orange"/>
+{/* planet utama */}
+
+<mesh ref={planet}>
+
+<sphereGeometry args={[1.8,32,32]}/>
+<meshStandardMaterial map={texture}/>
+
 </mesh>
 
 {/* atmosphere glow */}
 
-<mesh ref={glowRef}>
-<sphereGeometry args={[2,64,64]} />
+<mesh>
+
+<sphereGeometry args={[1.95,32,32]}/>
+
 <meshBasicMaterial
-color="#ff9d00"
+color="#66ccff"
 transparent
-opacity={0.6}
+opacity={0.18}
+side={THREE.BackSide}
 />
+
 </mesh>
 
-</group>
 </group>
 
 )

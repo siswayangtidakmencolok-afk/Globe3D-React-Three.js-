@@ -6,27 +6,33 @@ export default function Wormhole(){
 
 const mesh = useRef<THREE.Mesh>(null!)
 
-useFrame((state)=>{
+useFrame(()=>{
 
-if(!mesh.current) return
+if(mesh.current){
 
-mesh.current.rotation.z += 0.02
+mesh.current.rotation.z += 0.01
+
+}
 
 })
 
 return(
 
-<mesh ref={mesh} position={[0,0,-40]}>
+<mesh
+ref={mesh}
+position={[-10,0,-12]}
+renderOrder={2}
+>
 
-<torusGeometry args={[6,2,64,128]}/>
+<torusGeometry args={[3,0.8,32,100]}/>
 
 <meshStandardMaterial
-color="#3300ff"
-emissive="#4400ff"
-emissiveIntensity={4}
-metalness={1}
-roughness={0}
+color="#4400ff"
+emissive="#6600ff"
+emissiveIntensity={3}
+transparent={false}
 />
+
 </mesh>
 
 )

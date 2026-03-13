@@ -1,4 +1,4 @@
-import { useFrame } from "@react-three/fiber"
+import { useFrame, useLoader } from "@react-three/fiber"
 import { useRef } from "react"
 import * as THREE from "three"
 
@@ -6,23 +6,30 @@ export default function PlanetGravity(){
 
 const planet = useRef<THREE.Mesh>(null!)
 
-useFrame((state)=>{
+const texture = useLoader(
+THREE.TextureLoader,
+"/textures/gravityplanet.jpg"
+)
 
-if(!planet.current) return
+useFrame(()=>{
+
+if(planet.current){
 
 planet.current.rotation.y += 0.002
+
+}
 
 })
 
 return(
 
-<mesh ref={planet} position={[40,0,0]}>
+<mesh ref={planet} position={[-18,5,-10]}>
 
-<sphereGeometry args={[4,64,64]}/>
-<meshStandardMaterial color="#d9a066"/>
+<sphereGeometry args={[1.5,32,32]}/>
+
+<meshStandardMaterial map={texture}/>
 
 </mesh>
 
 )
-
 }
