@@ -28,6 +28,7 @@ import WarpStars from "../components/WarpStars"
 import OrbitPlanet from "../components/OrbitPlanet"
 import OrbitPlanetLine from "../components/OrbitPlanetLine"
 import NewPlanet from "../components/NewPlanet"
+import BlackHoleSpiral from "../components/BlackHoleSpiral"
 
 export default function EarthScene(){
 
@@ -73,6 +74,7 @@ powerPreference:"high-performance"
 <OrbitLine/>
 <Spaceship/>
 <GasPlanet/>
+<BlackHoleSpiral/>
 
 {/* PLANET MODE */}
 {target === "planet" && (
