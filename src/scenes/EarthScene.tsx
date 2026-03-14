@@ -1,7 +1,7 @@
 import { Canvas } from "@react-three/fiber"
 import { OrbitControls, Stars } from "@react-three/drei"
 import { EffectComposer, Bloom, Vignette } from "@react-three/postprocessing"
-import { useState, Suspense } from "react"
+import { useState, Suspense, useEffect } from "react"
 
 import Globe from "../components/Globe"
 import Satellite from "../components/Satellite"
@@ -39,6 +39,18 @@ const [selectedCity,setSelectedCity] = useState<City | null>(null)
 const [target,setTarget] = useState("earth")
 const [cinematic,setCinematic] = useState(false)
 const [warp,setWarp] = useState(false)
+const [showAbout,setShowAbout] = useState(false)
+
+// Auto-hide About Modal after 5 seconds
+useEffect(() => {
+  if (!showAbout) return
+  
+  const timer = setTimeout(() => {
+    setShowAbout(false)
+  }, 5000)
+
+  return () => clearTimeout(timer)
+}, [showAbout])
 
 const buttonStyle = {
 padding:"12px 16px",
@@ -153,11 +165,34 @@ enablePan={true}
     <div className="logo">PORTFOLIO</div>
     <nav className="nav-links">
       <div className="nav-item active">Home</div>
-      <div className="nav-item">About</div>
+      <div 
+        className="nav-item" 
+        onClick={() => setShowAbout(true)}
+        style={{ cursor: "pointer" }}
+      >
+        About
+      </div>
       <div className="nav-item">Projects</div>
       <div className="nav-item">Contact</div>
     </nav>
   </header>
+
+  {/* Holographic About Modal */}
+  {showAbout && (
+    <div className="about-modal">
+      <h2 style={{ fontFamily: "'Outfit', sans-serif", color: "#4ade80", marginBottom: "1rem", fontSize: "1.5rem" }}>
+        Transmission Received... 📡
+      </h2>
+      <div className="about-content">
+        <p>
+          Hallo! Nama saya <strong>Fhazwan Athar Ramadhan</strong>, seorang pelajar yang tinggal di Jakarta 🏙️. Saya memiliki berbagai hobi yang saya sukai, mulai dari menggambar 🎨, coding 💻, membaca manga 📚, bermain game 🎮, hingga berpergian untuk mengeksplorasi tempat-tempat baru 🗺️.
+        </p>
+        <p>
+          Saya membuat profil ini untuk semua orang yang berkunjung dan ingin melihat perjalanan saya di dunia pemrograman. Saya orangnya cenderung dingin, tapi memiliki rasa ingin tahu yang sangat tinggi terhadap hal-hal baru 🔍. Itulah yang membawa saya masuk ke jurusan RPL—untuk menambah wawasan tentang pemrograman dan mengasah berbagai keahlian yang saya minati.
+        </p>
+      </div>
+    </div>
+  )}
 
   {/* Hero Content */}
   <div className="hero-content">

@@ -228,3 +228,51 @@ button:focus-visible {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+/* Hologram Effects */
+@keyframes hologramGlow {
+  0% { 
+    opacity: 0; 
+    filter: blur(8px); 
+    color: #fff; 
+    text-shadow: 0 0 10px #4ade80, 0 0 20px #4ade80; 
+    transform: scale(0.95) translateY(-10px); 
+  }
+  100% { 
+    opacity: 1; 
+    filter: blur(0px); 
+    color: #e2e8f0; 
+    text-shadow: 0 0 5px rgba(74, 222, 128, 0.5); 
+    transform: scale(1) translateY(0); 
+  }
+}
+
+.about-modal {
+  position: absolute;
+  top: 90px;
+  left: 3rem;
+  width: 400px;
+  max-width: 90vw;
+  background: rgba(5, 10, 20, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(74, 222, 128, 0.3);
+  border-left: 4px solid #4ade80;
+  border-radius: 8px;
+  padding: 1.5rem;
+  color: #e2e8f0;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(74, 222, 128, 0.05);
+  animation: hologramGlow 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  pointer-events: auto;
+  z-index: 50;
+}
+
+.about-content {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.about-content p {
+  margin-bottom: 0.8rem;
+}
