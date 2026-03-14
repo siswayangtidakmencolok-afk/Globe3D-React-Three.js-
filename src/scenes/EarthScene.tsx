@@ -40,6 +40,7 @@ const [target,setTarget] = useState("earth")
 const [cinematic,setCinematic] = useState(false)
 const [warp,setWarp] = useState(false)
 const [showAbout,setShowAbout] = useState(false)
+const [showContact,setShowContact] = useState(false)
 
 // Auto-hide About Modal after 5 seconds
 useEffect(() => {
@@ -51,6 +52,17 @@ useEffect(() => {
 
   return () => clearTimeout(timer)
 }, [showAbout])
+
+// Auto-hide Contact Modal after 10 seconds
+useEffect(() => {
+  if (!showContact) return
+  
+  const timer = setTimeout(() => {
+    setShowContact(false)
+  }, 10000)
+
+  return () => clearTimeout(timer)
+}, [showContact])
 
 const buttonStyle = {
 padding:"12px 16px",
@@ -173,7 +185,13 @@ enablePan={true}
         About
       </div>
       <div className="nav-item">Projects</div>
-      <div className="nav-item">Contact</div>
+      <div 
+        className="nav-item"
+        onClick={() => setShowContact(true)}
+        style={{ cursor: "pointer" }}
+      >
+        Contact
+      </div>
     </nav>
   </header>
 
@@ -191,6 +209,28 @@ enablePan={true}
           Saya membuat profil ini untuk semua orang yang berkunjung dan ingin melihat perjalanan saya di dunia pemrograman. Saya orangnya cenderung dingin, tapi memiliki rasa ingin tahu yang sangat tinggi terhadap hal-hal baru 🔍. Itulah yang membawa saya masuk ke jurusan RPL—untuk menambah wawasan tentang pemrograman dan mengasah berbagai keahlian yang saya minati.
         </p>
       </div>
+    </div>
+  )}
+
+  {/* Holographic Contact Modal */}
+  {showContact && (
+    <div className="contact-modal">
+      <h2 style={{ fontFamily: "'Outfit', sans-serif", color: "#8b5cf6", margin: "0 0 1.2rem 0", fontSize: "1.4rem" }}>
+        Secure Channel Open 🔗
+      </h2>
+      
+      <a href="https://github.com/siswayangtidakmencolok-afk" target="_blank" rel="noreferrer" className="contact-link">
+        💻 GitHub
+      </a>
+      <a href="https://www.instagram.com/f.zvvn_/" target="_blank" rel="noreferrer" className="contact-link">
+        📸 Instagram
+      </a>
+      <a href="https://tiktok.com/@www.tiktok.com/eksrovertselalu" target="_blank" rel="noreferrer" className="contact-link">
+        🎵 TikTok
+      </a>
+      <a href="https://discord.com/channels/@zxyninety" target="_blank" rel="noreferrer" className="contact-link" style={{ marginBottom: 0 }}>
+        🎮 Discord
+      </a>
     </div>
   )}
 

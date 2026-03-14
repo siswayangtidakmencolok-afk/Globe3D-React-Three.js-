@@ -276,3 +276,64 @@ button:focus-visible {
 .about-content p {
   margin-bottom: 0.8rem;
 }
+
+@keyframes hologramGlowContact {
+  0% { 
+    opacity: 0; 
+    filter: blur(8px); 
+    color: #fff; 
+    text-shadow: 0 0 10px #8b5cf6, 0 0 20px #8b5cf6; 
+    transform: scale(0.95) translateY(-10px); 
+  }
+  100% { 
+    opacity: 1; 
+    filter: blur(0px); 
+    color: #e2e8f0; 
+    text-shadow: 0 0 5px rgba(139, 92, 246, 0.5); 
+    transform: scale(1) translateY(0); 
+  }
+}
+
+.contact-modal {
+  position: absolute;
+  top: 90px;
+  right: 3rem;
+  width: 320px;
+  max-width: 90vw;
+  background: rgba(5, 10, 20, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  border-right: 4px solid #8b5cf6;
+  border-radius: 8px;
+  padding: 1.5rem;
+  color: #e2e8f0;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(139, 92, 246, 0.05);
+  animation: hologramGlowContact 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  pointer-events: auto;
+  z-index: 50;
+}
+
+.contact-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  margin-bottom: 10px;
+  text-decoration: none;
+  color: #e2e8f0;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border: 1px solid transparent;
+}
+
+.contact-link:hover {
+  background: rgba(139, 92, 246, 0.15);
+  border-color: rgba(139, 92, 246, 0.4);
+  transform: translateX(-5px);
+  color: #fff;
+}
