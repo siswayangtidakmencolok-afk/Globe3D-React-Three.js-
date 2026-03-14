@@ -1,5 +1,6 @@
 import { Canvas } from "@react-three/fiber"
 import { OrbitControls, Stars } from "@react-three/drei"
+import { EffectComposer, Bloom, Vignette } from "@react-three/postprocessing"
 import { useState } from "react"
 
 import Globe from "../components/Globe"
@@ -56,8 +57,9 @@ const isMobile = window.innerWidth < 768
 
 return(
 
-<div style={{width:"100%",height:"100%"}}>
+<div className="app-container">
 
+<div className="canvas-container">
 <Canvas
 style={{ width:"100%", height:"100%" }}
 camera={{ position:[0,0,8], fov:45 }}
@@ -116,7 +118,7 @@ powerPreference:"high-performance"
 </>
 )}
 
-<CameraRig target={target}/>
+<CameraRig target={target} warp={warp}/>
 <CameraController selectedCity={selectedCity}/>
 <CinematicCamera enabled={cinematic}/>
 
@@ -136,78 +138,90 @@ enableZoom={true}
 enablePan={true}
 />
 
+<EffectComposer disableNormalPass>
+  <Bloom luminanceThreshold={0.5} mipmapBlur intensity={1.5} />
+  <Vignette eskil={false} offset={0.1} darkness={1.1} />
+</EffectComposer>
+
 </Canvas>
 
-<div
-style={{
-position:"absolute",
-top:20,
-left:20,
-display:"flex",
-flexDirection:"column",
-gap:"12px",
-zIndex:10
-}}
->
+<div className="ui-layer">
+  {/* Header Navigation */}
+  <header className="nav-header">
+    <div className="logo">PORTFOLIO</div>
+    <nav className="nav-links">
+      <div className="nav-item active">Home</div>
+      <div className="nav-item">About</div>
+      <div className="nav-item">Projects</div>
+      <div className="nav-item">Contact</div>
+    </nav>
+  </header>
 
-<button
-onClick={()=>{
-setTarget("earth")
-setWarp(false)
-}}
-style={buttonStyle}
->
-Earth
-</button>
+  {/* Hero Content */}
+  <div className="hero-content">
+    <h1 className="hero-title">Discover The Universe</h1>
+    <p className="hero-subtitle">Interactive 3D Experiences & Frontend Engineering.</p>
+  </div>
 
-<button
-onClick={()=>{
-setTarget("planet")
-setWarp(false)
-}}
-style={buttonStyle}
->
-Gas Planet
-</button>
+  {/* Control Panel (Glassmorphism) */}
+  <div className="control-panel glass">
+    <button
+      onClick={()=>{
+        setTarget("earth")
+        setWarp(false)
+      }}
+      className={`control-btn ${target === "earth" ? "active" : ""}`}
+    >
+      🌍 Earth
+    </button>
 
-<button
-onClick={()=>{
-setTarget("blackhole")
-setWarp(false)
-}}
-style={buttonStyle}
->
-Black Hole
-</button>
+    <button
+      onClick={()=>{
+        setTarget("planet")
+        setWarp(false)
+      }}
+      className={`control-btn ${target === "planet" ? "active" : ""}`}
+    >
+      🪐 Gas Planet
+    </button>
 
-<button
-onClick={()=>{
-setTarget("wormhole")
-setWarp(true)
-}}
-style={{
-...buttonStyle,
-background:"#4c1d95"
-}}
->
-Wormhole
-</button>
+    <button
+      onClick={()=>{
+        setTarget("blackhole")
+        setWarp(false)
+      }}
+      className={`control-btn ${target === "blackhole" ? "active" : ""}`}
+    >
+      🕳️ Black Hole
+    </button>
 
-<button
-onClick={()=>setWarp(!warp)}
-style={buttonStyle}
->
-{warp ? "Stop Warp" : "Warp Jump"}
-</button>
+    <button
+      onClick={()=>{
+        setTarget("wormhole")
+        setWarp(true)
+      }}
+      className={`control-btn ${target === "wormhole" ? "active" : ""}`}
+      style={{ background: target === "wormhole" ? "rgba(76, 29, 149, 0.6)" : "" }}
+    >
+      🌌 Wormhole
+    </button>
 
-<button
-onClick={()=>setCinematic(!cinematic)}
-style={buttonStyle}
->
-{cinematic ? "Free Camera" : "Cinematic"}
-</button>
+    <button
+      onClick={()=>setWarp(!warp)}
+      className="control-btn"
+    >
+      🚀 {warp ? "Stop Warp" : "Warp Jump"}
+    </button>
 
-</div>  
+    <button
+      onClick={()=>setCinematic(!cinematic)}
+      className="control-btn"
+    >
+      🎥 {cinematic ? "Free Camera" : "Cinematic"}
+    </button>
+  </div>
+</div>
+</div>
 </div>
 
 )

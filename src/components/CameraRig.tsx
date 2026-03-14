@@ -4,9 +4,10 @@ import * as THREE from "three"
 
 type Props = {
   target: string
+  warp?: boolean
 }
 
-export default function CameraRig({ target }: Props) {
+export default function CameraRig({ target, warp }: Props) {
 
   const { camera } = useThree()
 
@@ -32,8 +33,8 @@ export default function CameraRig({ target }: Props) {
     }
 
     if(target === "wormhole"){
-      targetPos.current.set(0, 4, -22)
-      lookTarget.current.set(0, 0, -30)
+      targetPos.current.set(-12, 3, -10)
+      lookTarget.current.set(-12, 3, -18)
     }
 
     moving.current = true
@@ -42,15 +43,21 @@ export default function CameraRig({ target }: Props) {
 
   useFrame(() => {
 
+    // Dynamic FOV for warp effect
+    const targetFov = warp ? 100 : 45
+    // @ts-ignore
+    camera.fov = THREE.MathUtils.lerp(camera.fov, targetFov, 0.05)
+    camera.updateProjectionMatrix()
+
     if(!moving.current) return
 
-    camera.position.lerp(targetPos.current, 0.04)
+    camera.position.lerp(targetPos.current, 0.03)
 
     const currentLook = new THREE.Vector3()
     currentLook.lerpVectors(
       currentLook,
       lookTarget.current,
-      0.05
+      0.03
     )
 
     camera.lookAt(lookTarget.current)
