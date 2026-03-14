@@ -32,6 +32,9 @@ import NewPlanet from "../components/NewPlanet"
 import BlackHoleSpiral from "../components/BlackHoleSpiral"
 import WarpTrail from "../components/WarpTrail"
 import SpaceDust from "../components/SpacedDust"
+import SkullPlanet from "../components/SkullPlanet"
+import RobotPlanet from "../components/RobotPlanet"
+import SpaceBattle from "../components/SpaceBattle"
 
 export default function EarthScene(){
 
@@ -110,6 +113,9 @@ powerPreference:"high-performance"
 <GasPlanet/>
 <NewPlanet/>
 <PlanetGravity/>
+<RobotPlanet/>
+<SkullPlanet/>
+<SpaceBattle/>
 
 <BlackHole/>
 <BlackHoleSpiral/>
