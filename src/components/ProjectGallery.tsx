@@ -93,7 +93,6 @@ function ProjectCard({ project }: { project: typeof projects[0] }) {
         position={[0, 1, 0.1]}
         fontSize={0.5}
         color="#ffffff"
-        font="https://fonts.gstatic.com/s/outfit/v11/QGYyz_MVcBeNP4NjuGObqx1XmO1I4TC1O4G0EkE.woff"
         anchorX="center"
         anchorY="middle"
         outlineWidth={0.02}
@@ -107,7 +106,6 @@ function ProjectCard({ project }: { project: typeof projects[0] }) {
         position={[0, 0, 0.1]}
         fontSize={0.25}
         color="#e2e8f0"
-        font="https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfMZhrib2Bg-4.ttf"
         anchorX="center"
         anchorY="middle"
         maxWidth={5}
