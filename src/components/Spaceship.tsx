@@ -19,13 +19,17 @@ if(!ship.current) return
 
 if(warp){
 
-ship.current.position.lerp(
-new THREE.Vector3(-12,3,-18),
-0.02
-)
+const shakeX = (Math.random() - 0.5) * 0.15
+const shakeY = (Math.random() - 0.5) * 0.15
+
+ship.current.scale.lerp(new THREE.Vector3(0.5, 0.5, 3), 0.05)
+
+const targetPos = new THREE.Vector3(-12 + shakeX, 3 + shakeY, -20)
+ship.current.position.lerp(targetPos, 0.04)
 
 }else{
 
+ship.current.scale.lerp(new THREE.Vector3(1, 1, 1), 0.1)
 ship.current.position.x += 0.002
 
 }

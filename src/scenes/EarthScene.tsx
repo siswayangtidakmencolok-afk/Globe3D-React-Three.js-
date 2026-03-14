@@ -1,7 +1,7 @@
 import { Canvas } from "@react-three/fiber"
 import { OrbitControls, Stars } from "@react-three/drei"
 import { EffectComposer, Bloom, Vignette } from "@react-three/postprocessing"
-import { useState } from "react"
+import { useState, Suspense } from "react"
 
 import Globe from "../components/Globe"
 import Satellite from "../components/Satellite"
@@ -70,6 +70,7 @@ powerPreference:"high-performance"
 }}
 >
 
+<Suspense fallback={null}>
 <GalaxySky/>
 <Sun/>
 <ShootingStars/>
@@ -142,6 +143,7 @@ enablePan={true}
   <Bloom luminanceThreshold={0.5} mipmapBlur intensity={1.5} />
   <Vignette eskil={false} offset={0.1} darkness={1.1} />
 </EffectComposer>
+</Suspense>
 
 </Canvas>
 
