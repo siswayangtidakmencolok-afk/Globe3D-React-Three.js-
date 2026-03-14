@@ -68,18 +68,6 @@ useEffect(() => {
   return () => clearTimeout(timer)
 }, [showContact])
 
-const buttonStyle = {
-padding:"12px 16px",
-fontSize:"14px",
-borderRadius:"10px",
-border:"none",
-background:"rgba(0,0,0,0.55)",
-color:"white",
-cursor:"pointer",
-backdropFilter:"blur(6px)",
-width:"130px",
-textAlign:"left" as const
-}
 
 const isMobile = window.innerWidth < 768
 
@@ -169,9 +157,14 @@ factor={isMobile ? 2 : 3}
 enabled={!cinematic}
 enableZoom={true}
 enablePan={true}
+enableDamping={true}
+dampingFactor={0.05}
+minDistance={3}
+maxDistance={40}
+maxPolarAngle={Math.PI / 1.5}
 />
 
-<EffectComposer disableNormalPass>
+<EffectComposer>
   <Bloom luminanceThreshold={0.5} mipmapBlur intensity={1.5} />
   <Vignette eskil={false} offset={0.1} darkness={1.1} />
 </EffectComposer>

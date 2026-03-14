@@ -337,3 +337,76 @@ button:focus-visible {
   transform: translateX(-5px);
   color: #fff;
 }
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .nav-header {
+    padding: 1rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+  }
+  
+  .logo {
+    font-size: 1.2rem;
+    width: 100%;
+    text-align: center;
+  }
+  
+  .nav-links {
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .nav-item {
+    font-size: 0.75rem;
+  }
+  
+  .hero-content {
+    padding: 0 1rem;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+  
+  .hero-title {
+    font-size: 2.2rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 0.9rem;
+  }
+  
+  .control-panel {
+    bottom: 10px;
+    right: 10px;
+    padding: 1rem;
+    gap: 8px;
+    min-width: 120px;
+    transform: scale(0.85); /* Shrink entire panel slightly on mobile */
+    transform-origin: bottom right;
+  }
+  
+  .control-btn {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+  
+  .about-modal {
+    top: 100px;
+    left: 5%;
+    width: 90%;
+    padding: 1rem;
+  }
+  
+  .about-content {
+    font-size: 0.8rem;
+  }
+  
+  .contact-modal {
+    top: 100px;
+    right: 5%;
+    width: 90%;
+    padding: 1rem;
+  }
+}

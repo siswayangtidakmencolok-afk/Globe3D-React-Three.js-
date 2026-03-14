@@ -64,6 +64,8 @@ export default function CameraRig({ target, warp }: Props) {
 
     if(camera.position.distanceTo(targetPos.current) < 0.15){
       moving.current = false
+      // Set exact position to prevent micro-jitter
+      camera.position.copy(targetPos.current)
     }
 
   })
