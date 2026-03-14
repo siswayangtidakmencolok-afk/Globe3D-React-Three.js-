@@ -35,6 +35,7 @@ import SpaceDust from "../components/SpacedDust"
 import SkullPlanet from "../components/SkullPlanet"
 import RobotPlanet from "../components/RobotPlanet"
 import SpaceBattle from "../components/SpaceBattle"
+import ProjectGallery from "../components/ProjectGallery"
 
 export default function EarthScene(){
 
@@ -116,6 +117,7 @@ powerPreference:"high-performance"
 <RobotPlanet/>
 <SkullPlanet/>
 <SpaceBattle/>
+<ProjectGallery/>
 
 <BlackHole/>
 <BlackHoleSpiral/>
