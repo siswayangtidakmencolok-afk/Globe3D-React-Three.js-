@@ -30,6 +30,7 @@ import OrbitPlanetLine from "../components/OrbitPlanetLine"
 import NewPlanet from "../components/NewPlanet"
 import BlackHoleSpiral from "../components/BlackHoleSpiral"
 import WarpTrail from "../components/WarpTrail"
+import SpaceDust from "../components/SpacedDust"
 
 export default function EarthScene(){
 
@@ -70,6 +71,7 @@ powerPreference:"high-performance"
 <GalaxySky/>
 <Sun/>
 <ShootingStars/>
+<SpaceDust/>
 
 <Globe setSelectedCity={setSelectedCity}/>
 <Satellite/>

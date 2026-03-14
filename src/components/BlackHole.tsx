@@ -1,135 +1,108 @@
 import { useFrame } from "@react-three/fiber"
-import { useRef } from "react"
+import { useMemo, useRef } from "react"
 import * as THREE from "three"
 
 export default function BlackHole(){
 
-const disk1 = useRef<THREE.Mesh>(null!)
-const disk2 = useRef<THREE.Mesh>(null!)
-const glow = useRef<THREE.Mesh>(null!)
-const beamTop = useRef<THREE.Mesh>(null!)
-const beamBottom = useRef<THREE.Mesh>(null!)
+const particleGroup = useRef<THREE.Group>(null!)
+const coreRef = useRef<THREE.Mesh>(null!)
+const diskRef = useRef<THREE.Mesh>(null!)
+
+const particles = useMemo(()=>{
+
+const arr = []
+
+for(let i=0;i<220;i++){
+
+arr.push({
+angle: Math.random()*Math.PI*2,
+radius: 4 + Math.random()*8,
+speed: 0.002 + Math.random()*0.003,
+y:(Math.random()-0.5)*1.5
+})
+
+}
+
+return arr
+
+},[])
 
 useFrame((state)=>{
 
 const t = state.clock.elapsedTime
 
-if(disk1.current){
-
-disk1.current.rotation.z += 0.015
-
+if(coreRef.current){
+coreRef.current.scale.setScalar(1 + Math.sin(t*3)*0.04)
 }
 
-if(disk2.current){
-
-disk2.current.rotation.z -= 0.01
-
+if(diskRef.current){
+diskRef.current.rotation.z += 0.003
 }
 
-if(glow.current){
+if(particleGroup.current){
 
-const pulse = 1 + Math.sin(t*2)*0.08
-glow.current.scale.set(pulse,pulse,pulse)
+particleGroup.current.children.forEach((child,i)=>{
 
+const p = particles[i]
+
+if(!p) return
+
+p.angle += p.speed
+p.radius -= 0.01
+
+if(p.radius < 1.2){
+p.radius = 5 + Math.random()*7
 }
 
-const beamPulse = 1 + Math.sin(t*3)*0.05
+child.position.x = Math.cos(p.angle)*p.radius
+child.position.z = Math.sin(p.angle)*p.radius
+child.position.y = p.y
 
-if(beamTop.current){
-
-beamTop.current.scale.set(beamPulse,beamPulse,beamPulse)
-
-}
-
-if(beamBottom.current){
-
-beamBottom.current.scale.set(beamPulse,beamPulse,beamPulse)
+})
 
 }
 
 })
 
 return(
+<group position={[-15,4,0]}>
 
-<group position={[10,0,-12]}>
-
-{/* inti blackhole */}
-
-<mesh>
-
-<sphereGeometry args={[1.5,32,32]}/>
-<meshStandardMaterial color="black"/>
-
+{/* core */}
+<mesh ref={coreRef}>
+<sphereGeometry args={[1.2,64,64]}/>
+<meshBasicMaterial color="black"/>
 </mesh>
 
-{/* accretion disk utama */}
-
-<mesh ref={disk1} rotation={[Math.PI/2,0,0]}>
-
-<torusGeometry args={[3,0.35,16,100]}/>
+{/* glowing disk */}
+<mesh ref={diskRef} rotation={[Math.PI/2,0,0]}>
+<ringGeometry args={[1.8,3.8,128]}/>
 <meshBasicMaterial
-color="#ff5500"
+color="#ff6600"
 transparent
-opacity={0.65}
+opacity={0.45}
 />
-
 </mesh>
 
-{/* disk energi kedua */}
-
-<mesh ref={disk2} rotation={[0.6,0,0]}>
-
-<torusGeometry args={[3.8,0.15,16,100]}/>
+{/* outer disk */}
+<mesh rotation={[Math.PI/2,0,0]}>
+<ringGeometry args={[3.8,5.8,128]}/>
 <meshBasicMaterial
-color="#aa44ff"
+color="#ffaa33"
 transparent
-opacity={0.35}
+opacity={0.15}
 />
-
 </mesh>
 
-{/* glow luar */}
-
-<mesh ref={glow}>
-
-<sphereGeometry args={[2.3,32,32]}/>
-<meshBasicMaterial
-color="#5522ff"
-transparent
-opacity={0.08}
-side={THREE.BackSide}
-/>
-
+{/* particles */}
+<group ref={particleGroup}>
+{particles.map((_,i)=>(
+<mesh key={i}>
+<sphereGeometry args={[0.04,4,4]}/>
+<meshBasicMaterial color="white"/>
 </mesh>
-
-{/* beam atas */}
-
-<mesh ref={beamTop} position={[0,4,0]}>
-
-<cylinderGeometry args={[0.15,0.6,8,16]}/>
-<meshBasicMaterial
-color="#66ccff"
-transparent
-opacity={0.3}
-/>
-
-</mesh>
-
-{/* beam bawah */}
-
-<mesh ref={beamBottom} position={[0,-4,0]}>
-
-<cylinderGeometry args={[0.6,0.15,8,16]}/>
-<meshBasicMaterial
-color="#66ccff"
-transparent
-opacity={0.3}
-/>
-
-</mesh>
-
+))}
 </group>
 
+</group>
 )
-
 }
