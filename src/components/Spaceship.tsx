@@ -4,26 +4,38 @@ import * as THREE from "three"
 
 import DroneDock from "./DroneDock"
 
-export default function Spaceship(){
 
-const ship = useRef<THREE.Group>(null!)
+type Props = {
+warp:boolean
+}
 
-useFrame((state)=>{
+export default function Spaceship({warp}:Props){
+  
+  const ship = useRef<THREE.Group>(null!)
+
+useFrame(()=>{
 
 if(!ship.current) return
 
-const t = state.clock.elapsedTime
+if(warp){
 
-ship.current.position.x = Math.sin(t*0.2)*30
-ship.current.position.z = Math.cos(t*0.5)*30
+ship.current.position.lerp(
+new THREE.Vector3(-12,3,-18),
+0.02
+)
 
-ship.current.rotation.y += 0.01
+}else{
+
+ship.current.position.x += 0.002
+
+}
 
 })
 
-return(
 
-<group ref={ship}>
+return(
+  
+  <group ref={ship}>
 
 <mesh>
 <boxGeometry args={[3,1,10]}/>

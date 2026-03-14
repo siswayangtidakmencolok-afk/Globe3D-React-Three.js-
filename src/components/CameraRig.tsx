@@ -11,41 +11,51 @@ export default function CameraRig({ target }: Props) {
   const { camera } = useThree()
 
   const targetPos = useRef(new THREE.Vector3())
+  const lookTarget = useRef(new THREE.Vector3())
   const moving = useRef(false)
 
   useEffect(() => {
 
-    console.log("Camera target:", target)
-
     if(target === "earth"){
-      targetPos.current.set(0,0,8)
+      targetPos.current.set(0, 0, 8)
+      lookTarget.current.set(0, 0, 0)
     }
 
     if(target === "planet"){
-      targetPos.current.set(15,2,8)
+      targetPos.current.set(14, 3, 8)
+      lookTarget.current.set(14, 0, 0)
     }
 
     if(target === "blackhole"){
-      targetPos.current.set(-15,4,10)
+      targetPos.current.set(-14, 4, 10)
+      lookTarget.current.set(-12, 0, 0)
     }
 
     if(target === "wormhole"){
-      targetPos.current.set(0,0,-40)
+      targetPos.current.set(0, 4, -22)
+      lookTarget.current.set(0, 0, -30)
     }
 
     moving.current = true
 
-  },[target])
+  }, [target])
 
-  useFrame(()=>{
+  useFrame(() => {
 
     if(!moving.current) return
 
-    camera.position.lerp(targetPos.current,0.05)
+    camera.position.lerp(targetPos.current, 0.04)
 
-    camera.lookAt(0,0,0)
+    const currentLook = new THREE.Vector3()
+    currentLook.lerpVectors(
+      currentLook,
+      lookTarget.current,
+      0.05
+    )
 
-    if(camera.position.distanceTo(targetPos.current) < 0.1){
+    camera.lookAt(lookTarget.current)
+
+    if(camera.position.distanceTo(targetPos.current) < 0.15){
       moving.current = false
     }
 

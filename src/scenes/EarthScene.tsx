@@ -29,6 +29,7 @@ import OrbitPlanet from "../components/OrbitPlanet"
 import OrbitPlanetLine from "../components/OrbitPlanetLine"
 import NewPlanet from "../components/NewPlanet"
 import BlackHoleSpiral from "../components/BlackHoleSpiral"
+import WarpTrail from "../components/WarpTrail"
 
 export default function EarthScene(){
 
@@ -56,8 +57,8 @@ return(
 
 <div style={{width:"100%",height:"100%"}}>
 
-<Canvas 
-style={{ width: "100%", height: "100%" }}
+<Canvas
+style={{ width:"100%", height:"100%" }}
 camera={{ position:[0,0,8], fov:45 }}
 dpr={[1,1.5]}
 gl={{
@@ -65,61 +66,61 @@ antialias:false,
 powerPreference:"high-performance"
 }}
 >
+
 <GalaxySky/>
 <Sun/>
 <ShootingStars/>
+
 <Globe setSelectedCity={setSelectedCity}/>
-<NewPlanet/>
 <Satellite/>
 <OrbitLine/>
-<Spaceship/>
+
+<Spaceship warp={warp}/>
+<WarpTrail active={warp} position={[-8,2,-14]}/>
+
 <GasPlanet/>
+<NewPlanet/>
+<PlanetGravity/>
+
+<BlackHole/>
 <BlackHoleSpiral/>
 
-{/* PLANET MODE */}
-{target === "planet" && (
-<>
-<GasPlanet/>
+<Wormhole/>
+
 <SaturnPlanet/>
+
+{/* mode tambahan */}
+
+{target==="planet" && (
+<>
 <OrbitPlanet/>
 <OrbitPlanetLine/>
 <AsteroidBelt/>
-<Spaceship/>
 </>
 )}
 
-{/* BLACKHOLE MODE */}
-{target === "blackhole" && (
+{target==="blackhole" && (
 <>
 <BlackHoleGravity/>
 <AsteroidField/>
-<Spaceship/>
 </>
 )}
-<BlackHole/>
-<Wormhole/>
 
-{/* WORMHOLE MODE */}
-{target === "wormhole" && (
+{target==="wormhole" && (
 <>
 <Nebula/>
 <NebulaCloud/>
 <WarpStars active={warp}/>
-<Spaceship/>
 </>
 )}
 
-{/* CAMERA SYSTEM */}
-<PlanetGravity/>
-<CinematicCamera enabled={cinematic}/>
 <CameraRig target={target}/>
 <CameraController selectedCity={selectedCity}/>
+<CinematicCamera enabled={cinematic}/>
 
-{/* LIGHT */}
 <ambientLight intensity={0.4}/>
 <directionalLight position={[5,3,5]} intensity={2}/>
 
-{/* STARS */}
 <Stars
 radius={120}
 depth={35}
@@ -127,13 +128,6 @@ count={isMobile ? 500 : 1200}
 factor={isMobile ? 2 : 3}
 />
 
-{/* DEBUG PLANET */}
-<mesh>
-<sphereGeometry args={[2,32,32]}/>
-<meshStandardMaterial color="blue"/>
-</mesh>
-
-{/* CONTROL */}
 <OrbitControls
 enabled={!cinematic}
 enableZoom={true}
@@ -142,8 +136,6 @@ enablePan={true}
 
 </Canvas>
 
-
-{/* UI CAMERA BUTTON */}
 <div
 style={{
 position:"absolute",
@@ -156,32 +148,64 @@ zIndex:10
 }}
 >
 
-<button onClick={()=>setTarget("earth")} style={buttonStyle}>
+<button
+onClick={()=>{
+setTarget("earth")
+setWarp(false)
+}}
+style={buttonStyle}
+>
 Earth
 </button>
 
-<button onClick={()=>setTarget("planet")} style={buttonStyle}>
+<button
+onClick={()=>{
+setTarget("planet")
+setWarp(false)
+}}
+style={buttonStyle}
+>
 Gas Planet
 </button>
 
-<button onClick={()=>setTarget("blackhole")} style={buttonStyle}>
+<button
+onClick={()=>{
+setTarget("blackhole")
+setWarp(false)
+}}
+style={buttonStyle}
+>
 Black Hole
 </button>
 
-<button onClick={()=>setTarget("wormhole")} style={buttonStyle}>
+<button
+onClick={()=>{
+setTarget("wormhole")
+setWarp(true)
+}}
+style={{
+...buttonStyle,
+background:"#4c1d95"
+}}
+>
 Wormhole
 </button>
 
-<button onClick={()=>setWarp(!warp)} style={buttonStyle}>
+<button
+onClick={()=>setWarp(!warp)}
+style={buttonStyle}
+>
 {warp ? "Stop Warp" : "Warp Jump"}
 </button>
 
-<button onClick={()=>setCinematic(!cinematic)} style={buttonStyle}>
+<button
+onClick={()=>setCinematic(!cinematic)}
+style={buttonStyle}
+>
 {cinematic ? "Free Camera" : "Cinematic"}
 </button>
 
-</div>
-
+</div>  
 </div>
 
 )
