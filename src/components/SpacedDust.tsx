@@ -1,60 +1,52 @@
 import { useFrame } from "@react-three/fiber"
-import { useMemo, useRef } from "react"
+import { useMemo, useRef, useEffect } from "react"
 import * as THREE from "three"
 
 export default function SpaceDust(){
 
-const group = useRef<THREE.Group>(null!)
+  const meshRef = useRef<THREE.InstancedMesh>(null!)
+  const count = 160
 
-const dust = useMemo(()=>{
+  const dustData = useMemo(() => {
+    const data = []
+    for(let i=0; i<count; i++) {
+      data.push({
+        position: new THREE.Vector3(
+          (Math.random()-0.5)*100,
+          (Math.random()-0.5)*60,
+          (Math.random()-0.5)*100
+        ),
+        speed: 0.1 + Math.random() * 0.2
+      })
+    }
+    return data
+  }, [])
 
-const arr = []
+  useEffect(() => {
+    const dummy = new THREE.Object3D()
+    dustData.forEach((d, i) => {
+      dummy.position.copy(d.position)
+      dummy.updateMatrix()
+      meshRef.current.setMatrixAt(i, dummy.matrix)
+    })
+    meshRef.current.instanceMatrix.needsUpdate = true
+  }, [dustData])
 
-for(let i=0;i<160;i++){
+  useFrame((state) => {
+    const t = state.clock.elapsedTime
+    if (meshRef.current) {
+      meshRef.current.rotation.y = t * 0.015
+    }
+  })
 
-arr.push({
-x:(Math.random()-0.5)*80,
-y:(Math.random()-0.5)*50,
-z:(Math.random()-0.5)*80
-})
-
-}
-
-return arr
-
-},[])
-
-useFrame(()=>{
-
-if(group.current){
-
-group.current.rotation.y += 0.0003
-
-}
-
-})
-
-return(
-
-<group ref={group}>
-
-{dust.map((d,i)=>(
-
-<mesh key={i} position={[d.x,d.y,d.z]}>
-
-<sphereGeometry args={[0.03,4,4]}/>
-
-<meshBasicMaterial
-color="#ddddff"
-transparent
-opacity={0.5}
-/>
-
-</mesh>
-
-))}
-
-</group>
-
-)
+  return (
+    <instancedMesh ref={meshRef} args={[null!, null!, count]}>
+      <sphereGeometry args={[0.04, 8, 8]} />
+      <meshBasicMaterial 
+        color="#ffffff" 
+        transparent 
+        opacity={0.3} 
+      />
+    </instancedMesh>
+  )
 }

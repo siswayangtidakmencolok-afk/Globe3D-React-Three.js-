@@ -1,5 +1,5 @@
 import { Canvas } from "@react-three/fiber"
-import { OrbitControls, Stars } from "@react-three/drei"
+import { OrbitControls, Stars, Html } from "@react-three/drei"
 import { EffectComposer, Bloom, Vignette } from "@react-three/postprocessing"
 import { useState, Suspense, useEffect } from "react"
 
@@ -36,6 +36,7 @@ import SkullPlanet from "../components/SkullPlanet"
 import RobotPlanet from "../components/RobotPlanet"
 import SpaceBattle from "../components/SpaceBattle"
 import ProjectGallery from "../components/ProjectGallery"
+import Comet from "../components/Comet"
 
 export default function EarthScene(){
 
@@ -79,14 +80,28 @@ return(
 <Canvas
 style={{ width:"100%", height:"100%" }}
 camera={{ position:[0,0,8], fov:45 }}
-dpr={[1,1.5]}
 gl={{
 antialias:false,
-powerPreference:"high-performance"
+powerPreference:"high-performance",
+alpha: true
 }}
+dpr={isMobile ? [1, 1.2] : [1, 1.5]}
 >
 
-<Suspense fallback={null}>
+<Suspense fallback={
+  <Html center>
+    <div style={{ 
+      color: "#4ade80", 
+      fontFamily: "'Outfit', sans-serif", 
+      whiteSpace: "nowrap",
+      textAlign: "center"
+    }}>
+      <h2 style={{ letterSpacing: "4px", margin: 0, fontSize: isMobile ? "14px" : "20px" }}>TRANSMISSION LOADING...</h2>
+      <div style={{ width: "100px", height: "2px", background: "#4ade80", margin: "10px auto", opacity: 0.5 }}></div>
+      <p style={{ fontSize: "10px", opacity: 0.8 }}>INITIALIZING STAR SYSTEMS</p>
+    </div>
+  </Html>
+}>
 <GalaxySky/>
 <Sun/>
 <ShootingStars/>
@@ -106,6 +121,7 @@ powerPreference:"high-performance"
 <SkullPlanet/>
 <SpaceBattle/>
 <ProjectGallery/>
+<Comet/>
 
 <BlackHole/>
 <BlackHoleSpiral/>
@@ -165,7 +181,11 @@ maxPolarAngle={Math.PI / 1.5}
 />
 
 <EffectComposer>
-  <Bloom luminanceThreshold={0.5} mipmapBlur intensity={1.5} />
+  <Bloom 
+    luminanceThreshold={0.5} 
+    mipmapBlur={!isMobile} 
+    intensity={isMobile ? 0.8 : 1.5} 
+  />
   <Vignette eskil={false} offset={0.1} darkness={1.1} />
 </EffectComposer>
 </Suspense>

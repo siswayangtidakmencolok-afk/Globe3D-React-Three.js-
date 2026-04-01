@@ -37,30 +37,24 @@ return (
 
 {/* EARTH */}
 <mesh ref={earthRef}>
-
-<sphereGeometry args={[2, 64, 64]} />
-
-<meshStandardMaterial
-map={dayMap}
-emissiveMap={nightMap}
-emissive={"#ffffff"}
-emissiveIntensity={0.4}
-/>
-
+  <sphereGeometry args={[2, window.innerWidth < 768 ? 24 : 64, window.innerWidth < 768 ? 24 : 64]} />
+  <meshStandardMaterial
+    map={dayMap}
+    emissiveMap={nightMap}
+    emissive={"#ffffff"}
+    emissiveIntensity={0.4}
+  />
 </mesh>
 
 {/* CLOUDS */}
 <mesh ref={cloudRef}>
-
-<sphereGeometry args={[2.03, 64, 64]} />
-
-<meshStandardMaterial
-map={cloudMap}
-transparent
-opacity={0.8}
-depthWrite={false}
-/>
-
+  <sphereGeometry args={[2.03, window.innerWidth < 768 ? 24 : 64, window.innerWidth < 768 ? 24 : 64]} />
+  <meshStandardMaterial
+    map={cloudMap}
+    transparent
+    opacity={0.8}
+    depthWrite={false}
+  />
 </mesh>
 
 {/* ATMOSPHERE */}
